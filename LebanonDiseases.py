@@ -6,7 +6,7 @@ import plotly.express as px
 px.set_mapbox_access_token("pk.eyJ1IjoiZmFyYWh0MTE3IiwiYSI6ImNtOWN2cDYzbTA1cGsybHNhMGd4amZrY2oifQ.UILGXLituZsWgt0k3AP6ow")
 
 # ---------- CONSTANTS ----------
-CSV_FILE_PATH = '/Users/farahtermos/Desktop/MSBA 601/Assignment 5/MumpsLeb.csv'
+CSV_FILE_PATH = 'MumpsLeb.csv'
 MAP_CENTER = {'lat': 33.95, 'lon': 35.85}
 MAP_ZOOM = 8.2
 MAPBOX_STYLE = 'mapbox://styles/mapbox/light-v11'

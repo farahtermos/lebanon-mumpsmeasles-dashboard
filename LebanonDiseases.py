@@ -105,6 +105,54 @@ def main():
                 unsafe_allow_html=True
             )
 
+    # ---------- LINE CHART: Mumps Trends Over Time ----------
+
+    st.markdown("### 📈 Mumps Trends Over Time by Region")
+
+    available_regions = sorted(df['Region'].unique())
+    selected_line_regions = st.multiselect(
+        "Compare regional mump cases using the dropdown:",
+        options=available_regions,
+        default=["Beqaa Valley"]
+    )
+
+    line_df = df[df['Region'].isin(selected_line_regions)]
+    line_df = line_df.groupby(['Year', 'Region'])['Cases'].sum().reset_index()
+
+    color_map = {region: ('indianred' if region == 'Beqaa Valley' else 'lightgrey') for region in selected_line_regions}
+
+    line_fig = px.line(
+        line_df,
+        x='Year',
+        y='Cases',
+        color='Region',
+        color_discrete_map=color_map,
+        markers=True
+    )
+
+    # Clean layout: no legend, no grid lines
+    line_fig.update_layout(
+        showlegend=False,
+        xaxis=dict(title="Year", showgrid=False, zeroline=False),
+        yaxis=dict(title="Total Cases", showgrid=False, zeroline=False),
+        margin=dict(l=40, r=40, t=20, b=20),
+        plot_bgcolor='white'
+    )
+
+    # Label each region at the last point
+    for region in selected_line_regions:
+        latest_year = line_df[line_df['Region'] == region]['Year'].max()
+        latest_value = line_df[(line_df['Region'] == region) & (line_df['Year'] == latest_year)]['Cases'].values[0]
+        line_fig.add_annotation(
+            x=latest_year,
+            y=latest_value,
+            text=region if region != 'Beqaa Valley' else "Beqaa",
+            showarrow=False,
+            font=dict(color=color_map[region], size=13),
+            xanchor="left"
+        )
+
+    st.plotly_chart(line_fig, use_container_width=True)
     # ---------- BAR CHART (Sorted Descending, No Numbers) ----------
     st.markdown("### 📊 Total Mumps Cases by Region (All Years)")
 

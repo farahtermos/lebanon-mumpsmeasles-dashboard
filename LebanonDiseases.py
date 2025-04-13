@@ -98,7 +98,7 @@ def main():
                 <div style='display: flex; align-items: center; height: 100%; text-align: center;'>
                     <div style='margin: auto; font-size: 18px;'>
                         The lack of access to <strong>MMR vaccines</strong> in rural areas remains a critical challenge in Lebanon, <br>
-                        with the highest number of recorded mumps cases in the <em>{top_region}</em>.
+                        with the highest number of recorded mumps cases in the <strong>{top_region}<strong>.
                     </div>
                 </div>
                 """,
@@ -107,7 +107,7 @@ def main():
 
     # ---------- LINE CHART: Mumps Trends Over Time ----------
 
-    st.markdown("### 📈 Mumps Trends Over Time by Region")
+    st.markdown("### Mumps Trends Over Time by Region")
 
     available_regions = sorted(df['Region'].unique())
     selected_line_regions = st.multiselect(
@@ -154,7 +154,7 @@ def main():
 
     st.plotly_chart(line_fig, use_container_width=True)
     # ---------- BAR CHART (Sorted Descending, No Numbers) ----------
-    st.markdown("### 📊 Total Mumps Cases by Region (All Years)")
+    st.markdown("### Total Mumps Cases by Region (All Years)")
 
     region_totals_df = df.groupby('Region')['Cases'].sum().reset_index()
     region_totals_df.columns = ['Region', 'Total Cases']
